@@ -59,7 +59,7 @@ function getData() {
   sg();
 }
 
-function count(printOut, t) {
+function count() {
   Xout = 0;
   Yout = 0;
   let u = (1 - t);
@@ -88,8 +88,8 @@ function count(printOut, t) {
     Xout = Xout + (x[i]);
     Yout = Yout + (y[i]);
   }
-  if (printOut) out.innerHTML = `x = ${Xout}<br />y = ${Yout}`;
-  else return [Xout, Yout];
+  out.innerHTML = `x = ${Xout}<br />y = ${Yout}`;
+  
 
 }
 
@@ -108,22 +108,10 @@ function bc(n, k) {
   return result;
 }
 
-function drawline() {
-  for (let time = 0; time <= 1; time += 0.01) {
-    let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    svg.appendChild(circle);
-    circle.setAttribute('cx', count(false, time)[0] * 15 + 300);
-    circle.setAttribute('cy', -count(false, time)[1] * 15 + 300);
-    circle.setAttribute('r', 1);
-    circle.setAttribute('style', 'fill: yellow; stroke: yellow; stroke-width: 1px;');
-  }
-}
-
 
 function sg() {
   svg.innerHTML = '';
   let multiplyer = 15
-  drawline();
 
   for (let i = 0; i <= points; i++) {
     let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -154,7 +142,7 @@ function circl() {
     circle.setAttribute('cx', cnt(a[`line${a.tier}`][i][0], a[`line${a.tier}`][i][1], a[`line${a.tier}`][i][2], a[`line${a.tier}`][i][3])[0]);
     circle.setAttribute('cy', cnt(a[`line${a.tier}`][i][0], a[`line${a.tier}`][i][1], a[`line${a.tier}`][i][2], a[`line${a.tier}`][i][3])[1]);
     circle.setAttribute('r', 4);
-    if (points == a.tier) circle.setAttribute('style', 'fill: red; stroke: red; stroke-width: 2px;');
+    if (points == a.tier) {circle.setAttribute('style', 'fill: red; stroke: red; stroke-width: 2px;'); console.log(cnt(a[`line${a.tier}`][i][0], a[`line${a.tier}`][i][1], a[`line${a.tier}`][i][2], a[`line${a.tier}`][i][3])[0], cnt(a[`line${a.tier}`][i][0], a[`line${a.tier}`][i][1], a[`line${a.tier}`][i][2], a[`line${a.tier}`][i][3])[1])}
     else circle.setAttribute('style', 'fill: none; stroke: green; stroke-width: 2px;');
     circle.setAttribute('id', `point${a.tier}${i}`);
     if (i > 0) {
