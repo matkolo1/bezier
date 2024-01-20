@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			padding: 0;
+		}
+
+		input[type="number"] {
+			height: 20px;
+			width: 50px;
+		}
+
+		button {
+			height: 20px;
+			width: 20px;
+		}
+
+		svg {
+			display: flex;
+			position: fixed;
+			background-color: rgb(133, 133, 133);
+			width: 600px;
+			height: 600px;
+			top: 0;
+			right: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="controls" id="controls">
+		<div class="points" id="control">
+			<div class='point' id='p0'>
+				<h3> Point 0 = &#60;
+					<input type="number" id="x0" placeholder="x">,&nbsp;
+					<input type="number" id="y0" placeholder="y">&gt;
+				</h3>
+			</div>
+			<div class="point" id="p1">
+				<h3> Point 1 = &#60;
+					<input type="number" id="x1" placeholder="x">,&nbsp;
+					<input type="number" id="y1" placeholder="y">&gt;
+				</h3>
+			</div>
+		</div>
+		<input type="button" value="&#43;" onclick="addControls()">
+		<input type="button" value="&#8722;" onclick="removeControls()">
+		<input type="button" value="&check;" onclick="getData()">
+		<input type="range" id="tin" max="100" min="0" step="1" oninput="tf()" value="0">
+		<h6 id="tv"></h6>
+	</div>
+	<h1 id="out"></h1>
+
+	<div class="svgContainer">
+		<svg id="svg">
+		</svg>
+	</div>
+	<script src="script.js"></script>
+</body>
+
+</html>
