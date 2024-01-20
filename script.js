@@ -7,6 +7,11 @@ var tv = document.getElementById('tv');
 var t = 0;
 var out = document.getElementById('out');
 var time = 0;
+var svg = document.getElementById('svg');
+var a = { state0: false, tier: 0 };
+var Xout = 0;
+var Yout = 0;
+
 
 function tf() {
   t = tin.value;
@@ -50,11 +55,13 @@ function getData() {
     if (yin == 0 || yin == NaN || yin == null) cordsY[i] = 0; else cordsY[i] = yin;
 
   }
-  count();
+  count(true, t);
   sg();
 }
 
-function count() {
+function count(printOut, t) {
+  Xout = 0;
+  Yout = 0;
   let u = (1 - t);
   let s = points;
 
@@ -77,15 +84,13 @@ function count() {
   }
   y[s] = t ** (s) * cordsY[s];
 
-
-  var Xout = 0;
-  var Yout = 0;
-
   for (let i = 0; i <= s; i++) {
     Xout = Xout + (x[i]);
     Yout = Yout + (y[i]);
   }
-  out.innerHTML = `x = ${Xout}<br />y = ${Yout}`
+  if (printOut) out.innerHTML = `x = ${Xout}<br />y = ${Yout}`;
+  else return [Xout, Yout];
+
 }
 
 
@@ -103,13 +108,22 @@ function bc(n, k) {
   return result;
 }
 
+function drawline() {
+  for (let time = 0; time <= 1; time += 0.01) {
+    let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    svg.appendChild(circle);
+    circle.setAttribute('cx', count(false, time)[0] * 15 + 300);
+    circle.setAttribute('cy', -count(false, time)[1] * 15 + 300);
+    circle.setAttribute('r', 1);
+    circle.setAttribute('style', 'fill: yellow; stroke: yellow; stroke-width: 1px;');
+  }
+}
 
 
-var svg = document.getElementById('svg');
-var a = { state0: false, tier: 0};
 function sg() {
   svg.innerHTML = '';
   let multiplyer = 15
+  drawline();
 
   for (let i = 0; i <= points; i++) {
     let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -126,14 +140,14 @@ function sg() {
     } else { a[`line${a.tier}`] = []; }
   }
 
-  line();
+  lin();
 }
 
 function cnt(x1, y1, x2, y2) {
   return [((1 - time) * x1) + (time * x2), ((1 - time) * y1) + (time * y2)]
 }
 
-function circle() {
+function circl() {
   for (let i in a[`line${a.tier}`]) {
     let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     svg.appendChild(circle);
@@ -153,10 +167,10 @@ function circle() {
     } else a[`line${a.tier + 1}`] = [];
   }
   a.tier++
-  if (a[`line${a.tier}`].length > 0) line();
+  if (a[`line${a.tier}`].length > 0) lin();
 }
 
-function line() {
+function lin() {
   for (let i in a[`line${a.tier}`]) {
     let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     svg.appendChild(line);
@@ -167,5 +181,5 @@ function line() {
     line.setAttribute('style', 'stroke: black; stroke-width: 2px;')
     line.setAttribute('id', `line${a.tier}${i}`);
   }
-  circle();
+  circl();
 }
